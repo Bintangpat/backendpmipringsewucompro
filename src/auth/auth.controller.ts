@@ -1,7 +1,6 @@
 import { Controller, Request, Post, UseGuards, Body, Get } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { AuthService } from './auth.service';
 import { RegisterDto, LoginDto, ForgotPasswordDto, ResetPasswordDto } from './dto/auth.dto';
 
@@ -36,15 +35,8 @@ export class AuthController {
     return req.user;
   }
 
-  @UseGuards(GoogleAuthGuard)
-  @Get('google')
-  async googleAuth(@Request() req) {
-    // Initiates the Google OAuth2 login flow
-  }
-
-  @UseGuards(GoogleAuthGuard)
-  @Get('google/callback')
-  async googleAuthRedirect(@Request() req) {
-    return this.authService.login(req.user);
+  @Post('google-login')
+  async googleLogin(@Body() profile: { email: string; name: string; image: string }) {
+    return this.authService.googleLogin(profile);
   }
 }

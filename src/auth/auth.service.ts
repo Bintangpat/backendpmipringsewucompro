@@ -51,17 +51,17 @@ export class AuthService {
     return result;
   }
 
-  async validateGoogleUser(profile: any) {
+  async googleLogin(profile: { email: string; name: string; image: string }) {
     let user = await this.userService.findByEmail(profile.email);
     if (!user) {
       user = await this.userService.create({
         email: profile.email,
-        name: profile.firstName + ' ' + profile.lastName,
-        image: profile.picture,
+        name: profile.name || 'Unknown User',
+        image: profile.image || null,
         password: null, // No password for Google OAuth
       });
     }
-    return user;
+    return this.login(user);
   }
 
   async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
