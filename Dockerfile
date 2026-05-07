@@ -1,5 +1,5 @@
 # Gunakan node versi terbaru
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -16,3 +16,4 @@ RUN npm run build
 
 # Jalankan aplikasi
 CMD ["npm", "run", "start:prod"]
+

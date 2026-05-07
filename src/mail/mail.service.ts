@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Resend } from 'resend';
+import 'dotenv/config';
 
 @Injectable()
 export class MailService {
